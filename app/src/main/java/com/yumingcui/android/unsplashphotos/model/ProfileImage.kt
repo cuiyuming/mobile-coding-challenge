@@ -1,3 +1,4 @@
+package com.yumingcui.android.unsplashphotos.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
