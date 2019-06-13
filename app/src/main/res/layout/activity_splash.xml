@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/opening_activity_parent_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_dog">
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/backgroundImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_dog"
+            android:scaleType="fitXY" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/blurredBackgroundImageView"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_dog_blur"
+            android:scaleType="fitXY" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.47000003"/>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_logo"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/blurredBackgroundImageView"/>
+
+
+    <!--</RelativeLayout>-->
+
+    <ProgressBar
+            android:id="@+id/opening_activity_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/logoImageView"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

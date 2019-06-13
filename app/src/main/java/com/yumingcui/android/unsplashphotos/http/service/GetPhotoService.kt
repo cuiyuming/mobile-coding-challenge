@@ -9,7 +9,6 @@ interface GetPhotoService {
 
     @GET("photos")
     fun getPhotos(
-        @Query("Authorization") clientId: String,
         @Query("per_page") pageSize: Int,
         @Query("page") page: Int,
         @Query("order_by") orderBy: String

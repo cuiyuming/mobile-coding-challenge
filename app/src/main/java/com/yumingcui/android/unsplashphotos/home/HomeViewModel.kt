@@ -20,8 +20,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
     var networkState: MutableLiveData<NetworkState>? = null
     var networkError: MutableLiveData<NetworkError>? = null
     private var getPhotoService: GetPhotoService? = null
-    var currentPage: Int = 1
+    var currentPage: Int = 0
     var totalPages: Int? = null
+
+    init {
+        if (photoLiveData == null) {
+            photoLiveData = MutableLiveData()
+        }
+        if (networkState == null) {
+            networkState = MutableLiveData()
+        }
+        loadMorePhotos()
+        networkState?.postValue(NetworkState.LOADING)
+    }
+
 
     fun loadMorePhotos(): MutableLiveData<List<Photo>> {
         if (photoLiveData == null) {
@@ -31,7 +43,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
             networkState = MutableLiveData()
         }
         networkState?.postValue(NetworkState.LOADING)
+
         loadPhoto(currentPage + 1)
+        currentPage++
 
         return photoLiveData as MutableLiveData<List<Photo>>
     }
@@ -41,7 +55,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
         getPhotoService = RetrofitInstance.retrofitInstance!!.create(GetPhotoService::class.java)
 
         val apiKey = getApplication<Application>().applicationContext.getString(R.string.api_key)
-        val call = getPhotoService?.getPhotos(apiKey, 20, page, "popular")
+        val call = getPhotoService?.getPhotos( 20, page, "popular")
 
         call?.enqueue(object : Callback<List<Photo>> {
             override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
