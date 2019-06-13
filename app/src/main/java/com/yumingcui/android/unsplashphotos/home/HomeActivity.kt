@@ -14,8 +14,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
 
-        val homeFragment = HomeFragment()
-        replaceFragment(homeFragment)
+        if(savedInstanceState == null) {
+            val homeFragment = HomeFragment()
+            replaceFragment(homeFragment)
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {

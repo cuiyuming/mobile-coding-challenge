@@ -25,7 +25,7 @@ class PhotoAdapter internal constructor(private val onItemClickListener: OnItemC
         this.currentPage = currentPage
         val filteredPhotos = newPhotos.filter { !photos!!.contains(it) }
         photos?.addAll(filteredPhotos)
-        this.notifyItemMoved(photos?.size?:0 - filteredPhotos.size, photos?.size?:0 - 1)
+        this.notifyItemRangeInserted(photos?.size?:0 - filteredPhotos.size, photos?.size?:0 - 1)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): PhotoViewHolder {
