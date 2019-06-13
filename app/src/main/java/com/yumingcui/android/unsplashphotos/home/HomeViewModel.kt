@@ -16,14 +16,27 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeViewModel(application: Application) : AndroidViewModel(application)  {
-    private var photoLiveData: MutableLiveData<List<Photo>>? = null
+    var photoLiveData: MutableLiveData<List<Photo>>? = null
     var networkState: MutableLiveData<NetworkState>? = null
     var networkError: MutableLiveData<NetworkError>? = null
     private var getPhotoService: GetPhotoService? = null
     var currentPage: Int = 1
     var totalPages: Int? = null
 
-    fun loadPhoto(page: Int) {
+    fun loadMorePhotos(): MutableLiveData<List<Photo>> {
+        if (photoLiveData == null) {
+            photoLiveData = MutableLiveData()
+        }
+        if (networkState == null) {
+            networkState = MutableLiveData()
+        }
+        networkState?.postValue(NetworkState.LOADING)
+        loadPhoto(currentPage + 1)
+
+        return photoLiveData as MutableLiveData<List<Photo>>
+    }
+
+    private fun loadPhoto(page: Int) {
         /*Create handle for the RetrofitInstance interface*/
         getPhotoService = RetrofitInstance.retrofitInstance!!.create(GetPhotoService::class.java)
 
