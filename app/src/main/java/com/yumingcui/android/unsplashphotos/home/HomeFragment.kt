@@ -2,6 +2,7 @@ package com.yumingcui.android.unsplashphotos.home
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.yumingcui.android.unsplashphotos.R
+import com.yumingcui.android.unsplashphotos.home.detail.DetailFragment
 import com.yumingcui.android.unsplashphotos.model.NetworkState
 import com.yumingcui.android.unsplashphotos.model.Photo
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -80,7 +82,6 @@ class HomeFragment : Fragment() {
                         progressBar.visibility = View.VISIBLE
                     }
                 }
-
             }
         })
     }
@@ -96,7 +97,16 @@ class HomeFragment : Fragment() {
                 sharedView: View
             ) {
                 if (photo != null) {
-                    //todo: open detail photo fragment
+                    homeViewModel.currentIndex = position
+                    val url = photo.urls?.full
+                    if (!TextUtils.isEmpty(url)) {
+                        (activity as HomeActivity).showFragmentWithTransition(this@HomeFragment,
+                            DetailFragment.newInstance(),
+                            "photoDetail",
+                            sharedView,
+                            sharedView.resources.getString(R.string.transition_image)+photo.id
+                        )
+                    }
                 }
             }
         })

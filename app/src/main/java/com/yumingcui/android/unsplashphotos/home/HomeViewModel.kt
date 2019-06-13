@@ -16,11 +16,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeViewModel(application: Application) : AndroidViewModel(application)  {
+    var photoCollection = ArrayList<Photo>()
     var photoLiveData: MutableLiveData<List<Photo>>? = null
     var networkState: MutableLiveData<NetworkState>? = null
     var networkError: MutableLiveData<NetworkError>? = null
     private var getPhotoService: GetPhotoService? = null
     var currentPage: Int = 0
+    var currentIndex: Int = 0
     var totalPages: Int? = null
 
     init {
@@ -61,6 +63,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
             override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
                 val code = response.code()
                 if (code in 200..299) {
+                    photoCollection.addAll(response.body())
                     photoLiveData?.postValue(response.body())
                     networkState?.postValue(NetworkState.LOADED)
                 } else if (code == 401) {
@@ -85,4 +88,37 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
             }
         })
     }
+
+    fun getCurrentPhoto(): Photo? {
+        return photoCollection.get(currentIndex)
+    }
+
+    fun getNextPhoto(): Photo? {
+        currentIndex++
+
+        var result:Photo? = null
+        if(currentIndex < photoCollection.size)
+            result =  photoCollection.get(currentIndex)
+        else{
+            loadMorePhotos()
+            return result
+        }
+        return result
+    }
+
+    fun getPreviousPhoto(): Photo? {
+        var result:Photo? = null
+
+        if(currentIndex > 0){
+            currentIndex--
+        }
+
+        if(currentIndex < photoCollection.size)
+            result =  photoCollection.get(currentIndex)
+        else{
+            return result
+        }
+        return result
+    }
+
 }
