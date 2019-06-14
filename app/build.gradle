@@ -35,11 +35,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "ApiKey", Unsplash_ApiKey
-            resValue 'string', "api_key", Unsplash_ApiKey
         }
         debug {
             buildConfigField 'String', "ApiKey", Unsplash_ApiKey
-            resValue 'string', "api_key", Unsplash_ApiKey
         }
     }
 }

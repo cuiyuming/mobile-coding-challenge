@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Unsplash Photos</string>
-    <string name="transition_image">ImageTransition</string>
     <string name="photo_list">Photo List</string>
     <string name="likesLabel">Likes</string>
 </resources>
