@@ -2,12 +2,9 @@ package com.yumingcui.android.unsplashphotos.util
 
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.format.DateTimeFormatter
-
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.TimeZone
+import java.util.*
 
 object DateUtils {
     val SERVER_TIME_STAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss-ss:ss"
@@ -25,12 +22,6 @@ object DateUtils {
         }
 
         return null
-    }
-
-    fun formatDate(date: Date, pattern: String): String {
-        val dateTimeFormatter = DateTimeFormat.forPattern(pattern)
-        val dateTime = DateTime(date)
-        return dateTimeFormatter.print(dateTime)
     }
 
     fun formatDate(date: Date): String {

@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.detail_fragment.*
 
 
 class DetailFragment : Fragment(), ISubscriber {
-
     companion object {
         fun newInstance(id: String): DetailFragment {
             val detailFragment = DetailFragment()
@@ -90,6 +89,7 @@ class DetailFragment : Fragment(), ISubscriber {
             if (photo == null) {
                 Toast.makeText(this.context, "You have reached the first photo", Toast.LENGTH_SHORT).show()
             } else {
+                addTransition(photo)
                 loadPhoto(photo)
             }
         }
@@ -99,13 +99,19 @@ class DetailFragment : Fragment(), ISubscriber {
             if (photo == null) {
                 Toast.makeText(this.context, "Loading...", Toast.LENGTH_SHORT).show()
             } else {
+                addTransition(photo)
                 loadPhoto(photo)
             }
         }
-
         val photo = (activity as HomeActivity).homeViewModel.getCurrentPhoto()
-
         loadPhoto(photo)
+    }
+
+    private fun addTransition(photo: Photo) {
+        if ((this@DetailFragment.view?.findViewById<PhotoView>(R.id.photoView))?.transitionName.isNullOrEmpty()) {
+            (this@DetailFragment.view?.findViewById<PhotoView>(R.id.photoView))?.transitionName =
+                "imageTransition" + photo.id
+        }
     }
 
     private fun loadPhoto(photo: Photo?) {

@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.yumingcui.android.unsplashphotos.R
 import com.yumingcui.android.unsplashphotos.http.service.GetPhotoService
 import com.yumingcui.android.unsplashphotos.http.service.RetrofitInstance
 import com.yumingcui.android.unsplashphotos.model.NetworkError
@@ -15,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(application: Application) : AndroidViewModel(application)  {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
     var photoCollection = ArrayList<Photo>()
     var photoLiveData: MutableLiveData<List<Photo>>? = null
     var networkState: MutableLiveData<NetworkState>? = null
@@ -23,7 +22,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
     private var getPhotoService: GetPhotoService? = null
     var currentPage: Int = 0
     var currentIndex: Int = 0
-    var totalPages: Int? = null
 
     init {
         if (photoLiveData == null) {
@@ -57,8 +55,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
         /*Create handle for the RetrofitInstance interface*/
         getPhotoService = RetrofitInstance.retrofitInstance!!.create(GetPhotoService::class.java)
 
-        val apiKey = getApplication<Application>().applicationContext.getString(R.string.api_key)
-        val call = getPhotoService?.getPhotos( 20, page, "popular")
+        val call = getPhotoService?.getPhotos(20, page, "popular")
 
         call?.enqueue(object : Callback<List<Photo>> {
             override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
@@ -82,6 +79,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
                     networkError?.postValue(NetworkError(Status.forCode(0)))
                 }
             }
+
             override fun onFailure(call: Call<List<Photo>>, t: Throwable) {
                 networkState?.postValue(NetworkState.LOADED)
                 Log.i("HomeViewModel", "onFailure")
@@ -97,10 +95,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
     fun getNextPhoto(): Photo? {
         currentIndex++
 
-        var result:Photo? = null
-        if(currentIndex < photoCollection.size)
-            result =  photoCollection.get(currentIndex)
-        else{
+        var result: Photo? = null
+        if (currentIndex < photoCollection.size)
+            result = photoCollection.get(currentIndex)
+        else {
             loadMorePhotos()
             return result
         }
@@ -108,15 +106,15 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
     }
 
     fun getPreviousPhoto(): Photo? {
-        var result:Photo? = null
+        var result: Photo? = null
 
-        if(currentIndex > 0){
+        if (currentIndex > 0) {
             currentIndex--
         }
 
-        if(currentIndex < photoCollection.size)
-            result =  photoCollection.get(currentIndex)
-        else{
+        if (currentIndex < photoCollection.size)
+            result = photoCollection.get(currentIndex)
+        else {
             return result
         }
         return result

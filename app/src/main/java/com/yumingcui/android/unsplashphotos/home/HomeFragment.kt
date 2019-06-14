@@ -18,7 +18,6 @@ import com.yumingcui.android.unsplashphotos.util.WrapContentStaggeredGridLayoutM
 import kotlinx.android.synthetic.main.home_fragment.*
 import androidx.recyclerview.widget.StaggeredGridLayoutManager as StaggeredGridLayoutManager1
 
-
 class HomeFragment : Fragment(), ISubscriber {
     override fun subscribeNetworkState(networkState: NetworkState) {
         when (networkState) {
@@ -110,7 +109,6 @@ class HomeFragment : Fragment(), ISubscriber {
                 if (firstVisibleItems != null && firstVisibleItems.isNotEmpty()) {
                     pastVisibleItems = firstVisibleItems[0]
                 }
-
                 if (!isLoading && !justStarted) {
                     if (visibleItemCount + pastVisibleItems >= totalItemCount) {
                         refreshData()

@@ -19,7 +19,6 @@ fun setImageUrl(imageView: ImageView, photo: Photo) {
     val url = photo?.urls?.thumb
     Glide.with(imageView.rootView.context)
         .load(url)
-        .thumbnail(0.2f)
         .into(imageView)
 
     val ratio =String.format("%d:%d", photo.width, photo.height)

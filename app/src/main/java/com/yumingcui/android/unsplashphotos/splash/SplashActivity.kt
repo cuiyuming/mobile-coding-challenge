@@ -39,7 +39,6 @@ class SplashActivity : AppCompatActivity() {
         fadeIn.duration = 2000
         fadeOut.duration = 2000
 
-
         val animTranslate = AnimationUtils.loadAnimation(this, R.anim.splash_translate)
         logoImageView.clearAnimation()
         logoImageView.startAnimation(animTranslate)
