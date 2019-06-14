@@ -16,7 +16,7 @@ val set = ConstraintSet()
 
 @BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, photo: Photo) {
-    val url = photo?.urls?.thumb
+    val url = photo.urls?.thumb
     Glide.with(imageView.rootView.context)
         .load(url)
         .into(imageView)

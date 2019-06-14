@@ -29,11 +29,6 @@ class HomeFragment : Fragment(), ISubscriber {
                 isLoading = false
                 progressBar.visibility = View.GONE
             }
-
-            // do nothing, just to list all possibilities
-            null -> {
-
-            }
         }
     }
 

@@ -44,11 +44,6 @@ class DetailFragment : Fragment(), ISubscriber {
             NetworkState.LOADED -> {
 
             }
-
-            // do nothing, just to list all possibilities
-            null -> {
-
-            }
         }
     }
 
