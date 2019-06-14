@@ -5,13 +5,13 @@
         android:id="@+id/opening_activity_parent_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_dog">
+        android:background="@drawable/ic_car">
 
     <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/backgroundImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_dog"
+            android:src="@drawable/ic_car"
             android:scaleType="fitXY" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -21,7 +21,7 @@
             android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_dog_blur"
+            android:src="@drawable/ic_car_blur"
             android:scaleType="fitXY" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.47000003"/>
