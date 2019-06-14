@@ -32,22 +32,22 @@
             <ImageButton android:id="@+id/previousButton"
                          android:layout_width="@dimen/navigation_button_size"
                          android:layout_height="@dimen/navigation_button_size"
-                         android:tint="@color/semiTransparent"
+                         android:backgroundTint="@color/semiTransparent"
                          android:scaleType="fitCenter"
                          android:adjustViewBounds="true"
                          android:layout_gravity="center|left"
-                         android:src="@drawable/ic_previous"
-                         android:background="?android:selectableItemBackground"/>
+                         android:background="@drawable/ic_previous"
+                         android:foreground="?android:selectableItemBackground"/>
 
             <ImageButton android:id="@+id/nextButton"
                          android:layout_width="@dimen/navigation_button_size"
                          android:layout_height="@dimen/navigation_button_size"
-                         android:tint="@color/semiTransparent"
+                         android:backgroundTint="@color/semiTransparent"
                          android:scaleType="fitCenter"
                          android:adjustViewBounds="true"
                          android:layout_gravity="center|right"
-                         android:src="@drawable/ic_next"
-                         android:background="?android:selectableItemBackground"/>
+                         android:background="@drawable/ic_next"
+                         android:foreground="?android:selectableItemBackground"/>
         </FrameLayout>
 
 

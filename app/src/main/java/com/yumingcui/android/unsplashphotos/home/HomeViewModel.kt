@@ -46,8 +46,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
         }
         networkState?.postValue(NetworkState.LOADING)
 
-        loadPhoto(currentPage + 1)
         currentPage++
+
+        loadPhoto(currentPage)
 
         return photoLiveData as MutableLiveData<List<Photo>>
     }

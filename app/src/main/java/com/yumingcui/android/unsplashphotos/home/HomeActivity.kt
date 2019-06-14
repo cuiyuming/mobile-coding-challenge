@@ -6,10 +6,18 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionInflater
 import com.yumingcui.android.unsplashphotos.R
+import com.yumingcui.android.unsplashphotos.model.NetworkError
+import com.yumingcui.android.unsplashphotos.model.NetworkState
+import com.yumingcui.android.unsplashphotos.model.Photo
+
 
 class HomeActivity : AppCompatActivity() {
+    lateinit var homeViewModel: HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
@@ -17,7 +25,33 @@ class HomeActivity : AppCompatActivity() {
         if(savedInstanceState == null) {
             val homeFragment = HomeFragment()
             replaceFragment(homeFragment)
+            homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
+            homeViewModel.networkState?.observe(this, Observer<NetworkState> { networkState ->
+                val fragments = supportFragmentManager.fragments
+                for(fragment in fragments){
+                    (fragment as? ISubscriber)?.subscribeNetworkState(networkState)
+                }
+            })
+
+            homeViewModel.networkError?.observe(this, Observer<NetworkError> { networkError ->
+                val fragments = supportFragmentManager.fragments
+                for(fragment in fragments){
+                    (fragment as? ISubscriber)?.subscribeNetworkError(networkError)
+                }
+            })
         }
+    }
+
+    fun loadData(){
+        homeViewModel.loadMorePhotos().observe(this, Observer<List<Photo>> { photoList ->
+            if (photoList != null) {
+                val fragments = supportFragmentManager.fragments
+                for(fragment in fragments){
+                    (fragment as? ISubscriber)?.subscribeData(photoList)
+                }
+            }
+        })
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -74,5 +108,9 @@ class HomeActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    fun getViewModel(): HomeViewModel {
+        return homeViewModel
     }
 }

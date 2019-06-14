@@ -6,40 +6,58 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.yumingcui.android.unsplashphotos.R
 import com.yumingcui.android.unsplashphotos.home.HomeActivity
-import com.yumingcui.android.unsplashphotos.home.HomeViewModel
+import com.yumingcui.android.unsplashphotos.home.ISubscriber
+import com.yumingcui.android.unsplashphotos.model.NetworkError
+import com.yumingcui.android.unsplashphotos.model.NetworkState
 import com.yumingcui.android.unsplashphotos.model.Photo
 import com.yumingcui.android.unsplashphotos.util.DateUtils
 import kotlinx.android.synthetic.main.detail_fragment.*
 
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), ISubscriber {
 
     companion object {
-        private val ARG_PHOTO = "DetailFragmentPhotoArg"
-
-        fun newInstance(): DetailFragment {
-            return DetailFragment()
+        fun newInstance(id: String): DetailFragment {
+            val detailFragment = DetailFragment()
+            val args = Bundle()
+            args.putString("transitionName", "imageTransition$id")
+            detailFragment.arguments = args
+            return detailFragment
         }
     }
 
-    private lateinit var homeViewModel: HomeViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        homeViewModel = activity?.run {
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
+    override fun subscribeData(list: List<Photo>) {
+        val photo = (activity as HomeActivity).homeViewModel.getCurrentPhoto()
+        loadPhoto(photo)
     }
+
+    override fun subscribeNetworkState(networkState: NetworkState) {
+        when (networkState) {
+            NetworkState.LOADING -> {
+                Toast.makeText(activity, "Loading", Toast.LENGTH_SHORT).show()
+            }
+            NetworkState.LOADED -> {
+
+            }
+
+            // do nothing, just to list all possibilities
+            null -> {
+
+            }
+        }
+    }
+
+    override fun subscribeNetworkError(networkError: NetworkError) {
+        Toast.makeText(activity, "Network error:" + networkError.status.name, Toast.LENGTH_SHORT).show()
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.detail_fragment, container, false)
         val bgImageView = rootView.findViewById<PhotoView>(R.id.photoView)
@@ -68,24 +86,24 @@ class DetailFragment : Fragment() {
         }
 
         previousButton.setOnClickListener {
-            val photo = homeViewModel.getPreviousPhoto()
-            if(photo == null){
+            val photo = (activity as HomeActivity).homeViewModel.getPreviousPhoto()
+            if (photo == null) {
                 Toast.makeText(this.context, "You have reached the first photo", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 loadPhoto(photo)
             }
         }
 
         nextButton.setOnClickListener {
-            val photo = homeViewModel.getNextPhoto()
-            if(photo == null){
+            val photo = (activity as HomeActivity).homeViewModel.getNextPhoto()
+            if (photo == null) {
                 Toast.makeText(this.context, "Loading...", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 loadPhoto(photo)
             }
         }
 
-        val photo = homeViewModel.getCurrentPhoto()
+        val photo = (activity as HomeActivity).homeViewModel.getCurrentPhoto()
 
         loadPhoto(photo)
     }
@@ -119,14 +137,6 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun refreshData() {
-        homeViewModel.loadMorePhotos().observe(this, Observer<List<Photo>> { photoList ->
-            if (photoList != null) {
-                val photo = homeViewModel.getCurrentPhoto()
-                loadPhoto(photo)
-            }
-        })
-    }
 
     private var mBottomSheetBehavior: BottomSheetBehavior<View?>? = null
 
