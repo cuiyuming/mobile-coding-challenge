@@ -110,6 +110,15 @@ class DetailFragment : Fragment(), ISubscriber {
     }
 
     private fun loadPhoto(photo: Photo?) {
+        val circularProgressDrawable = CircularProgressDrawable(this.context!!)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
+        Glide.with(this.activity)
+            .load(photo?.urls?.full)
+            .placeholder(circularProgressDrawable)
+            .into(photoView)
+
         titleTextView.text = photo?.altDescription
 
         if (photo?.updatedAt != null) {
@@ -119,23 +128,16 @@ class DetailFragment : Fragment(), ISubscriber {
             }
         }
 
-        val circularProgressDrawable = CircularProgressDrawable(this.context!!)
-        circularProgressDrawable.strokeWidth = 5f
-        circularProgressDrawable.centerRadius = 30f
-        circularProgressDrawable.start()
 
-        Glide.with(this.activity)
-            .load(photo?.urls?.full)
-            .asBitmap().asIs().dontTransform()
-            .placeholder(circularProgressDrawable)
-            .fitCenter()
-            .into(photoView)
 
-        val fragment = childFragmentManager.findFragmentById(R.id.panelFragment) as PanelFragment
 
-        if (photo != null) {
-            fragment.load(photo)
-        }
+
+
+//        val fragment = childFragmentManager.findFragmentById(R.id.panelFragment) as PanelFragment
+//
+//        if (photo != null) {
+//            fragment.load(photo)
+//        }
     }
 
 
@@ -143,27 +145,27 @@ class DetailFragment : Fragment(), ISubscriber {
 
     private fun configureBackdrop() {
         // Get the fragment reference
-        val fragment = childFragmentManager.findFragmentById(R.id.panelFragment)
-
-        fragment?.let {
-            // Get the BottomSheetBehavior from the fragment view
-            BottomSheetBehavior.from(it.view)?.let { bsb ->
-                // Set the initial state of the BottomSheetBehavior to HIDDEN
-                bsb.state = BottomSheetBehavior.STATE_COLLAPSED
-
-                // Set the trigger that will expand your view
-                fab.setOnClickListener {
-                    if (bsb.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                        bsb.state = BottomSheetBehavior.STATE_EXPANDED
-                    } else {
-                        bsb.state = BottomSheetBehavior.STATE_COLLAPSED
-                    }
-                }
-
-                // Set the reference into class attribute (will be used latter)
-                mBottomSheetBehavior = bsb
-            }
-        }
+//        val fragment = childFragmentManager.findFragmentById(R.id.panelFragment)
+//
+//        fragment?.let {
+//            // Get the BottomSheetBehavior from the fragment view
+//            BottomSheetBehavior.from(it.view)?.let { bsb ->
+//                // Set the initial state of the BottomSheetBehavior to HIDDEN
+//                bsb.state = BottomSheetBehavior.STATE_COLLAPSED
+//
+//                // Set the trigger that will expand your view
+//                fab.setOnClickListener {
+//                    if (bsb.state == BottomSheetBehavior.STATE_COLLAPSED) {
+//                        bsb.state = BottomSheetBehavior.STATE_EXPANDED
+//                    } else {
+//                        bsb.state = BottomSheetBehavior.STATE_COLLAPSED
+//                    }
+//                }
+//
+//                // Set the reference into class attribute (will be used latter)
+//                mBottomSheetBehavior = bsb
+//            }
+//        }
     }
 
 

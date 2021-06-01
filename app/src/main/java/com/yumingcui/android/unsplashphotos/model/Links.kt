@@ -2,7 +2,6 @@ package com.yumingcui.android.unsplashphotos.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
 data class Links(
     @SerializedName("self") val self: String,
     @SerializedName("html") val html: String,

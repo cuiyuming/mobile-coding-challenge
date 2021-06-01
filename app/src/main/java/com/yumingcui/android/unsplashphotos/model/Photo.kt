@@ -20,10 +20,10 @@ data class Photo (
 	@SerializedName("links") val links : Links?=null
 	@SerializedName("categories") val categories : List<String>?=null
 	@SerializedName("sponsored") val sponsored : Boolean?=null
-	@SerializedName("sponsored_by") val sponsored_by : String?=null
+	@SerializedName("sponsored_by") val sponsoredBy : String?=null
 	@SerializedName("sponsored_impressions_id") val sponsoredImpressionsId : String?=null
 	@SerializedName("likes") val likes : Int?=null
-	@SerializedName("liked_by_user") val liked_by_user : Boolean?=null
+	@SerializedName("liked_by_user") val likedByUser : Boolean?=null
 	@SerializedName("current_user_collections") val currentUserCollections : List<String>?=null
 	@SerializedName("user") val user : User? = null
 }
